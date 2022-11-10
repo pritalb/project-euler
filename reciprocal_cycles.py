@@ -42,5 +42,52 @@ def test_get_recurring_cycles():
     res = get_recurring_fractions(n)
     print(*res, sep='\n')
 
+# returns a list of slices of str. the slices will be of the specified size.
+def split_into_parts(str, size):
+    pass
+
+# check if all elements in a list are identical. all elements must be str or lists
+def are_same(ls):
+    if ls == [] or len(ls) == 1:
+        return True
+    
+    first_elem = ls[0]
+    last_elem = ls[-1]
+
+    for elem in ls[:-1]:
+        if elem != first_elem:
+            return False
+    
+    if len(first_elem) > len(last_elem):
+        return first_elem[:len(last_elem)] == last_elem
+    else:
+        return first_elem == last_elem
+
+
+def get_recurring_part(fract):
+    '''
+    IN:
+        fract: a float
+        a fraction in decimal form
+
+    Out:
+        a string of the properly formatted fraction
+        e.g. 0.3333333333 -> 0.(3)
+             0.1666666666 -> 0.1(6)
+    '''
+    out = '0.'
+    fraction_part = str(fract)[2:]
+    print(fraction_part)
+
+    return out
+
+def test_get_recurring_part():
+    n = 3
+    print(get_recurring_part(1/n))
+
 if __name__ == '__main__':
-    test_get_recurring_cycles()
+    test_get_recurring_part()
+
+    ls = ['abc']
+    print(ls)
+    print(are_same(ls))
