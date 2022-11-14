@@ -43,8 +43,19 @@ def test_get_recurring_cycles():
     print(*res, sep='\n')
 
 # returns a list of slices of str. the slices will be of the specified size.
-def split_into_parts(str, size):
-    pass
+def split_into_parts(inStr, size):
+    out = []
+    str_len = len(inStr)
+    start_index = 0
+    end_index = 0
+
+    while end_index <= str_len:
+        end_index = start_index + size
+
+        out.append(inStr[start_index : end_index])
+        start_index = end_index
+
+    return out
 
 # check if all elements in a list are identical. all elements must be str or lists
 def are_same(ls):
@@ -85,9 +96,13 @@ def test_get_recurring_part():
     n = 3
     print(get_recurring_part(1/n))
 
-if __name__ == '__main__':
-    test_get_recurring_part()
+def test_split_into_parts():
+    size = 4
+    s = 'abcdefghij'
+    print(split_into_parts(s, size))
 
-    ls = ['abc']
-    print(ls)
-    print(are_same(ls))
+if __name__ == '__main__':
+    s = '16666666666'
+    s1 = split_into_parts(s, 1)
+
+    print(are_same(s1))
