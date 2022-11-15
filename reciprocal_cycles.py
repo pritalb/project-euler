@@ -74,8 +74,31 @@ def are_same(ls):
     else:
         return first_elem == last_elem
 
+def find_recurring_part(fract):
+    for size in range(1, len(fract)):
+        parts = split_into_parts(fract, size)
+        found = are_same(parts)
+
+        if found:
+            return parts[0]
+    return None
 
 def get_recurring_part(fract):
+    iterable = fract[:]
+    out = ''
+
+    while len(iterable) > 1:
+        temp = find_recurring_part(iterable)
+
+        if temp == None:
+            iterable = iterable[1:]
+        else:
+            out = temp
+            break
+    return out
+
+
+def format_fact(fract):
     '''
     IN:
         fract: a float
@@ -86,10 +109,16 @@ def get_recurring_part(fract):
         e.g. 0.3333333333 -> 0.(3)
              0.1666666666 -> 0.1(6)
     '''
-    out = '0.'
-    fraction_part = str(fract)[2:]
-    print(fraction_part)
+    out = ''
+    recurring_part = fract[:]
 
+    while recurring_part[0] != recurring_part[1]:
+        out += recurring_part[0]
+        recurring_part = recurring_part[1:]
+
+
+    out = out + f'({get_recurring_part(recurring_part)})'
+    print(recurring_part)
     return out
 
 def test_get_recurring_part():
@@ -101,8 +130,15 @@ def test_split_into_parts():
     s = 'abcdefghij'
     print(split_into_parts(s, size))
 
-if __name__ == '__main__':
-    s = '16666666666'
-    s1 = split_into_parts(s, 1)
+def test_get_recurring_part():
+    s = '123456'
+    print(get_recurring_part(s))
 
-    print(are_same(s1))
+def test_format_fraction():
+    fract = '0.67121212121212'
+    print(format_fact(fract))
+
+if __name__ == '__main__':
+    fract = '0.775852222222'
+
+    print(get_recurring_part(fract))
