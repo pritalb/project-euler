@@ -37,7 +37,7 @@ def get_recurring_fractions(n):
 
     return out
 
-def test_get_recurring_cycles():
+def test_get_recurring_fractions():
     n = 10
     res = get_recurring_fractions(n)
     print(*res, sep='\n')
@@ -86,19 +86,21 @@ def find_recurring_part(fract):
 def get_recurring_part(fract):
     iterable = fract[:]
     out = ''
+    non_recurring_part = ''
 
     while len(iterable) > 1:
         temp = find_recurring_part(iterable)
 
         if temp == None:
+            non_recurring_part += iterable[0]
             iterable = iterable[1:]
         else:
             out = temp
             break
-    return out
+    return (non_recurring_part, out)
 
 
-def format_fact(fract):
+def format_fract(fract):
     '''
     IN:
         fract: a float
@@ -109,17 +111,8 @@ def format_fact(fract):
         e.g. 0.3333333333 -> 0.(3)
              0.1666666666 -> 0.1(6)
     '''
-    out = ''
-    recurring_part = fract[:]
-
-    while recurring_part[0] != recurring_part[1]:
-        out += recurring_part[0]
-        recurring_part = recurring_part[1:]
-
-
-    out = out + f'({get_recurring_part(recurring_part)})'
-    print(recurring_part)
-    return out
+    fract_parts = get_recurring_part(fract)
+    return f'{fract_parts[0]}({fract_parts[1]})'
 
 def test_get_recurring_part():
     n = 3
@@ -139,6 +132,6 @@ def test_format_fraction():
     print(format_fact(fract))
 
 if __name__ == '__main__':
-    fract = '0.775852222222'
+    fract = '0.13333333333'
 
-    print(get_recurring_part(fract))
+    print(format_fract(fract))
